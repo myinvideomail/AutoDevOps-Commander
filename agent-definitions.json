@@ -1,0 +1,54 @@
+{
+  "system": "AutoDevOps Commander (ADC)",
+  "agents": [
+    {
+      "name": "Planner Agent",
+      "role": "Breaks down issues into actionable technical tasks.",
+      "input": "GitLab Issue (Title, Description)",
+      "output": "JSON Task Plan",
+      "trigger": "Webhook (Issue Created)"
+    },
+    {
+      "name": "Builder Agent",
+      "role": "Generates code based on the task plan.",
+      "input": "JSON Task Plan",
+      "output": "GitLab Branch, Commits, Merge Request",
+      "trigger": "Planner Agent Completion"
+    },
+    {
+      "name": "QA Agent",
+      "role": "Writes and executes tests for the generated code.",
+      "input": "Branch Name, MR ID",
+      "output": "Test Files, Coverage Report, MR Comment",
+      "trigger": "Builder Agent Completion"
+    },
+    {
+      "name": "Security Agent",
+      "role": "Scans code for vulnerabilities and applies patches.",
+      "input": "Branch Name, MR ID",
+      "output": "Security Report, Patch Commits",
+      "trigger": "QA Agent Completion"
+    },
+    {
+      "name": "Compliance Agent",
+      "role": "Validates data usage and generates compliance reports.",
+      "input": "MR ID",
+      "output": "Markdown Compliance Report",
+      "trigger": "Security Agent Completion"
+    },
+    {
+      "name": "Deploy Agent",
+      "role": "Merges code and triggers deployment pipelines.",
+      "input": "MR ID",
+      "output": "Merged MR, Pipeline Trigger",
+      "trigger": "Compliance Agent Completion"
+    },
+    {
+      "name": "CTO Agent",
+      "role": "Observes the workflow and provides an executive summary.",
+      "input": "Full Workflow State",
+      "output": "Executive Summary Comment on Issue",
+      "trigger": "Deploy Agent Completion"
+    }
+  ]
+}
